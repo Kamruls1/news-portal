@@ -12,8 +12,7 @@ const getData = elements => {
         div.classList.add('col');
         div.innerHTML = `
         <a onclick="getMainNews('${element.category_id}')" class="text-dark btn fw-bold" href="#">${element.category_name}</a>
-    `;
-        newsCatagorys.appendChild(div)
+        `;
     });
 
 }
@@ -24,8 +23,14 @@ const getMainNews = (id) => {
         .then(res => res.json())
         .then(data => displayMainNews(data.data))
         .catch(error => console.log(error))
+
 }
 const displayMainNews = newsAll => {
+    console.log(newsAll.length);
+    const foundData = document.getElementById('items-found');
+    const foundDataString = foundData.innerText;
+    const foundDataValue = parseFloat(foundDataString);
+    foundDataValue.innerText = newsAll.length;
     toggleSpinner(false);
     const newsCard = document.getElementById('main-news');
     newsCard.innerHTML = '';
