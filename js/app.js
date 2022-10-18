@@ -35,7 +35,7 @@ const displayMainNews = newsAll => {
         div.innerHTML = `
         <div class="card mb-3 p-3">
             <div class="row g-0">
-                <div class="col-md-4">
+                <div class="col-lg-3 text-center">
                     <img src="${news.thumbnail_url}" class="img-fluid rounded-start" alt="...">
                 </div>
                 <div class="col-md-8">
@@ -43,20 +43,19 @@ const displayMainNews = newsAll => {
                         <h5 class="card-title">${news.title}</h5>
                         <p class="card-text">${news.details.slice(0, 300)}</p>
                         <p class="card-text mt-5" >
-                          <div class="d-flex justify-content-around">
-                           <div class="d-flex ">
+                          <div class="d-lg-flex d-md-flex justify-content-lg-around text-center">
+                           <div class="d-lg-flex align-items-center">
                             <img src="${news.author.img}" class="img-fluid rounded-circle mx-2"style="width:60px; height:60px;" alt="">
                              <div>
-                               <p class="my-0">${news.author.name}</p>
-                               <p>${news.author.published_date}</p>
+                               <p class="my-0 fw-bold">${news.author.name}</p>
                              </div>
                           </div>
-                          <div>
-                            <span><i class="fa-regular fa-eye"></i>${news.total_view}k</span>
-                          </div>
-                          <div class="btn">
-                            <i class="fa-solid fa-arrow-right"></i>
-                          </div>
+                            <div class=" d-lg-flex align-items-center">
+                                <span><i class="fa-regular fa-eye"></i>${news.total_view}k</span>
+                            </div>
+                            <div class="btn d-lg-flex align-items-center" id="click-modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </div>
                          </div>
                         </p>
                     </div>
@@ -75,5 +74,7 @@ const toggleSpinner = isLoading => {
         loaderSection.classList.add('d-none')
     }
 }
-
 getNews()
+document.getElementById('click-modal').addEventListener('click', function () {
+    displayMainNews()
+});
