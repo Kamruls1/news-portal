@@ -2,8 +2,8 @@ const getNews = () => {
     const url = `https://openapi.programming-hero.com/api/news/categories`;
     fetch(url)
         .then(res => res.json())
-        .then(data => getData(data.data.news_category
-        ))
+        .then(data => getData(data.data.news_category))
+        .catch(error => console.log(error))
 }
 const getData = elements => {
     const newsCatagorys = document.getElementById('news-catagorys');
@@ -23,13 +23,13 @@ const getMainNews = (id) => {
     fetch(url)
         .then(res => res.json())
         .then(data => displayMainNews(data.data))
+        .catch(error => console.log(error))
 }
 const displayMainNews = newsAll => {
     toggleSpinner(false);
     const newsCard = document.getElementById('main-news');
     newsCard.innerHTML = '';
     newsAll.forEach(news => {
-        console.log(news);
         const div = document.createElement('div');
         div.classList.add('col');
         div.innerHTML = `
@@ -53,7 +53,7 @@ const displayMainNews = newsAll => {
                             <div class=" d-lg-flex align-items-center">
                                 <span><i class="fa-regular fa-eye"></i>${news.total_view}k</span>
                             </div>
-                            <div class="btn d-lg-flex align-items-center" id="click-modal" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <div class="btn d-lg-flex align-items-center" onclick="getMainNews('${news.category_id}')" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <i class="fa-solid fa-arrow-right"></i>
                             </div>
                          </div>
@@ -63,6 +63,21 @@ const displayMainNews = newsAll => {
             </div>
         </div>`;
         newsCard.appendChild(div)
+        const modalName = document.getElementById('exampleModalLabel');
+        modalName.innerHTML = `
+        <p>${news.author.name}</p>`;
+        const modalNewsPublish = document.getElementById('publish');
+        modalNewsPublish.innerHTML = `
+        <p>Publish: ${news.author.published_date}</p>`;
+        const modalRating = document.getElementById('modal-rating');
+        modalRating.innerHTML = `
+        <p>Rating: ${news.rating.number}</p>`;
+        const modalDetails = document.getElementById('modal-badge');
+        modalDetails.innerHTML = `
+        <p>Badge: ${news.rating.badge}</p>`;
+        const modalTitle = document.getElementById('modal-title');
+        modalTitle.innerHTML = `
+        <p>${news.title}</p>`;
     })
 }
 const toggleSpinner = isLoading => {
@@ -75,6 +90,3 @@ const toggleSpinner = isLoading => {
     }
 }
 getNews()
-document.getElementById('click-modal').addEventListener('click', function () {
-    displayMainNews()
-});
