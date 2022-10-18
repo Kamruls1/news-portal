@@ -1,4 +1,5 @@
 const getNews = () => {
+    // main url---->
     const url = `https://openapi.programming-hero.com/api/news/categories`;
     fetch(url)
         .then(res => res.json())
@@ -6,6 +7,7 @@ const getNews = () => {
         .catch(error => console.log(error))
 }
 const getData = elements => {
+    // newsCatagorys add--->
     const newsCatagorys = document.getElementById('news-catagorys');
     elements.forEach(element => {
         const div = document.createElement('div');
@@ -18,7 +20,9 @@ const getData = elements => {
 
 }
 const getMainNews = (id) => {
+    // toggleSpinner--->
     toggleSpinner(true);
+    //  id url---->
     const url = `https://openapi.programming-hero.com/api/news/category/${id}`;
     fetch(url)
         .then(res => res.json())
@@ -27,12 +31,14 @@ const getMainNews = (id) => {
 
 }
 const displayMainNews = newsAll => {
-    console.log(newsAll.length);
+    // found Data------>
     const foundData = document.getElementById('items-found');
     const foundDataString = foundData.innerText;
     const foundDataValue = parseFloat(foundDataString);
     foundDataValue.innerText = newsAll.length;
+    // toggleSpinner---->
     toggleSpinner(false);
+    // main section add------>
     const newsCard = document.getElementById('main-news');
     newsCard.innerHTML = '';
     newsAll.forEach(news => {
@@ -69,6 +75,7 @@ const displayMainNews = newsAll => {
             </div>
         </div>`;
         newsCard.appendChild(div)
+        // modalDetails-------->
         const modalName = document.getElementById('exampleModalLabel');
         modalName.innerHTML = `
         <p>${news.author.name}</p>`;
@@ -86,6 +93,7 @@ const displayMainNews = newsAll => {
         <p>${news.title}</p>`;
     })
 }
+// spinnner-->
 const toggleSpinner = isLoading => {
     const loaderSection = document.getElementById('spinner');
     if (isLoading) {
