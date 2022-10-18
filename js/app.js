@@ -13,6 +13,7 @@ const getData = elements => {
         div.innerHTML = `
         <a onclick="getMainNews('${element.category_id}')" class="text-dark btn fw-bold" href="#">${element.category_name}</a>
         `;
+        newsCatagorys.appendChild(div)
     });
 
 }
